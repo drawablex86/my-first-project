@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>My Blog</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css">
-  </head>
-  <body>
-    <div class="content">
-      <nav>
-        <a href="/index.html">Home</a>
-      </nav>
+---
+layout: default
+title: My Blog
+---
 
-      <h1>My Blog</h1>
-      <p>Welcome to my blog!</p>
+<h1>My Blog</h1>
+<p>Welcome to my blog!</p>
+<p>Here are my blog posts:</p>
 
-      <hr>
-      <footer>Thanks for visiting my blog!</footer>
-    </div>
-  </body>
-</html>
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>

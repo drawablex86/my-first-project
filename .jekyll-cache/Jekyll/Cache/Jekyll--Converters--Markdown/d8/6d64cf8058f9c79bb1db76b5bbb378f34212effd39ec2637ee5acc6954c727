@@ -1,0 +1,271 @@
+I"�1<h1 id="how-to-create-a-blog-using-jekyll">How to create a blog using Jekyll</h1>
+<h3 id="source-httpshappycodingiotutorialshtmljekyll">Source: https://happycoding.io/tutorials/html/jekyll</h3>
+
+<h1 id="jekyll">Jekyll</h1>
+
+<p>Creating separate html pages for each of your blog pages is going to be a pain in the ass. Handling navigation bar will be cumbersome when your blog eventually grows and have a lot of pages to manage.
+  Updating a bunch of files every time you make a change is not what you want to be doing, you should be focusing on your writing instead.</p>
+
+<p>At that point you might look for using a database, but that requires a server. You might build your own JavaScript webapp that fetches post content from files, but that would require a lot of work from scratch.</p>
+
+<p>Wouldn’t it be nice if there was a way to avoid having individual HTML files for every post, without requiring a server or hacky JavaScript code?
+<em>That is what Jekyll is offering you</em></p>
+
+<hr />
+
+<h1 id="installing-jekyll">Installing Jekyll</h1>
+<ol>
+  <li><a href="https://jekyllrb.com/docs/installation/windows/">For windows</a></li>
+  <li><a href="https://jekyllrb.com/docs/installation/">Others</a></li>
+</ol>
+
+<p><em>Note</em>: while trying to install jeykll I faced a lot of set backs. Now I am trying to see if Ruby 2.5 version plus dev kit will work. Also the installation path should be a one word folder.</p>
+
+<p><em>warning</em> Path file names shouldn’t contain any special letter or spaces. https://github.com/jekyll/jekyll/issues/7587</p>
+
+<hr />
+
+<h1 id="starting-jekyll">Starting Jekyll</h1>
+
+<p>To start things off, create a new directory or repo and add an <code class="language-plaintext highlighter-rouge">index.html</code> file to it:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My Blog&lt;/title&gt;
+    &lt;link rel="stylesheet" type="text/css" href="/styles.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="content"&gt;
+      &lt;nav&gt;
+        &lt;a href="/index.html"&gt;Home&lt;/a&gt;
+      &lt;/nav&gt;
+
+      &lt;h1&gt;My Blog&lt;/h1&gt;
+      &lt;p&gt;Welcome to my blog!&lt;/p&gt;
+
+      &lt;hr&gt;
+      &lt;footer&gt;Thanks for visiting my blog!&lt;/footer&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>Completed the installation of jekyall</li>
+  <li>Cloned a test repository to my local pc</li>
+  <li>Opened the file path to it in cmd prompt</li>
+  <li>To start Jekyll, which builds your site and runs a local server, <code class="language-plaintext highlighter-rouge">cd</code> to your directory and execute this command:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll serve
+</code></pre></div></div>
+
+<ul>
+  <li>You site will be locally available at : http://127.0.0.1:4000/ or http://localhost:4000/</li>
+</ul>
+
+<p><strong>Note</strong> Everytime you want to run a server to a local website folder, you need to use the jekyll serve command with the cmd prompt opened in that path (or use cd)</p>
+
+<hr />
+
+<h1 id="adding-another-page-into-the-mix">Adding another page into the mix</h1>
+
+<p>add a <code class="language-plaintext highlighter-rouge">contact.html</code> page to your site:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Contact Me&lt;/title&gt;
+    &lt;link rel="stylesheet" type="text/css" href="/styles.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="content"&gt;
+      &lt;nav&gt;
+        &lt;a href="/index.html"&gt;Home&lt;/a&gt;
+        &lt;a href="/contact.html"&gt;Contact&lt;/a&gt;
+      &lt;/nav&gt;
+
+      &lt;h1&gt;Contact Me&lt;/h1&gt;
+      &lt;p&gt;You can email me at kevin@happycoding.io!&lt;/p&gt;
+
+      &lt;hr&gt;
+      &lt;footer&gt;Thanks for visiting my blog!&lt;/footer&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<p>Inside the navigation bar, each time we add a new page, we will have to add additional information, which is redundant work.</p>
+
+<p>In order to solve that we use something called <em>layouts</em></p>
+
+<hr />
+
+<h1 id="using-layout">Using Layout</h1>
+<p>All that repeated content also makes it harder to update your site. If you want to change the <code class="language-plaintext highlighter-rouge">&lt;nav&gt;</code> section, you have to change it on every page!</p>
+
+<p>To save yourself from all that trouble, you can use a <strong>layout</strong> to move your shared HTML into a single place. To create a layout, follow these steps:</p>
+
+<ol>
+  <li>
+    <p>Create a new directory named <code class="language-plaintext highlighter-rouge">_layouts</code></p>
+  </li>
+  <li>
+    <p>Create a new file in the <code class="language-plaintext highlighter-rouge">_layouts</code> directory named <code class="language-plaintext highlighter-rouge">default.html</code></p>
+  </li>
+  <li>
+    <p>Save this content to the <code class="language-plaintext highlighter-rouge">default.html</code> file:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My Blog&lt;/title&gt;
+    &lt;link rel="stylesheet" type="text/css" href="/styles.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="content"&gt;
+      &lt;nav&gt;
+        &lt;a href="/index.html"&gt;Home&lt;/a&gt;
+        &lt;a href="/contact.html"&gt;Contact&lt;/a&gt;
+      &lt;/nav&gt;
+    
+          
+    
+      &lt;hr&gt;
+      &lt;footer&gt;Thanks for visiting my blog!&lt;/footer&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div>    </div>
+
+    <p>Notice the `` part of this file.</p>
+  </li>
+  <li>
+    <p>Modify your <code class="language-plaintext highlighter-rouge">index.html</code> and <code class="language-plaintext highlighter-rouge">contact.html</code> files so that they contain <strong>front matter</strong> (a list of <code class="language-plaintext highlighter-rouge">key: value</code> pairs between <code class="language-plaintext highlighter-rouge">---</code>) at the top pointing to the layout you just created.</p>
+  </li>
+  <li>
+    <p>Below the front matter, the only content you need to type out is that what you want to insert as `` into the layout. For example your blog post.</p>
+  </li>
+</ol>
+
+<p>(<em>Here complex questions arises infront of me, like even if it helps in  templating, how will i manage the navigation into multiple blogs posts and enable tag based search and what not</em>)</p>
+
+<p>For example, here’s <code class="language-plaintext highlighter-rouge">index.html</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+layout: default
+---
+
+&lt;h1&gt;My Blog&lt;/h1&gt;
+&lt;p&gt;Welcome to my blog!&lt;/p&gt;
+</code></pre></div></div>
+
+<p>The front matter at the top tells Jekyll to take the content from the file and insert it into the <code class="language-plaintext highlighter-rouge">default.html</code> layout.</p>
+
+<p><em>It’s now much easier to change the <code class="language-plaintext highlighter-rouge">&lt;nav&gt;</code> or <code class="language-plaintext highlighter-rouge">&lt;footer&gt;</code> on every page, because you only need to change it in one file! It’s also easier to add a new page, because you only need to specify the content, not all of the surrounding HTML.</em></p>
+
+<hr />
+
+<h1 id="front-matter">Front Matter</h1>
+<ul>
+  <li>Front matter is a set of <code class="language-plaintext highlighter-rouge">key: value</code> properties at the top of a file.</li>
+  <li>Its separated from the content body using two sets of <code class="language-plaintext highlighter-rouge">---</code> three dashes.</li>
+</ul>
+
+<p>For example, right now the <code class="language-plaintext highlighter-rouge">default.html</code> layout sets the <code class="language-plaintext highlighter-rouge">&lt;title&gt;</code> of every page to <code class="language-plaintext highlighter-rouge">My Blog</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;title&gt;My Blog&lt;/title&gt;
+</code></pre></div></div>
+
+<p>To customize this for every page, first define a <code class="language-plaintext highlighter-rouge">title</code> property in each file. Here’s the <code class="language-plaintext highlighter-rouge">contact.html</code> file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+layout: default
+title: Contact Me
+---
+
+&lt;h1&gt;Contact Me&lt;/h1&gt;
+&lt;p&gt;You can email me at kevin@happycoding.io!&lt;/p&gt;
+</code></pre></div></div>
+
+<p><strong>Next, modify the <code class="language-plaintext highlighter-rouge">default.html</code> layout file to use that property:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;title&gt;How-to-create-a-blog-using-Jekyll&lt;/title&gt;
+</code></pre></div></div>
+
+<p>This tells Jekyll to take the <code class="language-plaintext highlighter-rouge">title</code> property from the front matter of the individual page and include it in the HTML that it outputs.</p>
+
+<p><em>You can set any custom properties you want in a page’s front matter and then use those properties in your layout files.</em></p>
+
+<h1 id="posts">Posts</h1>
+<p>Now comes the most powerful feature of the Jekyll</p>
+<ol>
+  <li>
+    <p>Create a new directory called <code class="language-plaintext highlighter-rouge">_posts</code> which will hold all of your blog posts (or tutorial posts, or recipe posts, or whatever kind of post you want).</p>
+  </li>
+  <li>
+    <p>Inside the <code class="language-plaintext highlighter-rouge">_posts</code> directory, create a post file with this naming pattern:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>YYYY-MM-DD-your-post-title.html
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Then inside your post file, add your content. You can also specify a layout using front matter, so each post only contains its own content!</p>
+  </li>
+</ol>
+
+<p>For example, here’s <code class="language-plaintext highlighter-rouge">2021-04-13-firstpost.html</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+layout: default
+---
+
+&lt;h1&gt;My first sample blog&lt;/h1&gt;
+&lt;p&gt;April 13, 2021&lt;/p&gt;
+&lt;p&gt;Today I wrote my first post using html!&lt;/p&gt;
+&lt;p&gt;Since i still haven't learn to embedd images in html or how to organise them in the source file, I am unable to add an image to this post.&lt;/p&gt;
+</code></pre></div></div>
+
+<p>Now you can access that post at Now you can access that post at ]
+http://localhost:4000/2021/04/13/firstpost.html</p>
+
+<p><em>Note: even if the file formatting is 2021-01-01-title.html the webaddress should be slashs ie 2021/01/01/title.html</em></p>
+
+<h1 id="customizing-post-urls">Customizing Post URLs</h1>
+
+<p>By default, a post is available at URL <code class="language-plaintext highlighter-rouge">/YYYY/MM/DD/post-title.html</code>.</p>
+
+<p>Using the <code class="language-plaintext highlighter-rouge">permalink</code> property in a post’s front matter you can changes how the post url is named (a custom url)</p>
+
+<p>See the <a href="https://jekyllrb.com/docs/permalinks/">Permalinks</a> page for different keywords you can use to build a post’s URL format.</p>
+
+<p>For example, if you wanted to use the title without the date, you could add this property to a post’s front matter:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>permalink: /:title.html
+</code></pre></div></div>
+
+<p>Now the URL of the post will be <code class="language-plaintext highlighter-rouge">/firstpost.html</code> instead of <code class="language-plaintext highlighter-rouge">//2021/04/13/firstpost.html</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+
+layout: default
+
+title: Beach
+
+permalink: :title  &lt;!-- Permalink becomes whatever the title here is, ex: it will be /beach here --&gt;
+
+---
+
+  
+
+&lt;h1\&gt;Beach&lt;/h1\&gt;
+
+&lt;p\&gt;April 13, 2021&lt;/p\&gt;
+
+&lt;p\&gt;I am a beach!&lt;/p\&gt;
+
+&lt;img src\="/images/1.jpg" /&gt;
+</code></pre></div></div>
+
+:ET
